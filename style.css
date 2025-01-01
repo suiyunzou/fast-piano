@@ -41,26 +41,29 @@ body{
     line-height: 1.4;
 }
 
-.gameContainer{
-    margin: 0 auto;
+.gameContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
     background: rgba(0, 0, 0, 0.8);
     display: none;
-    border-radius: 15px;
-    box-shadow: 0 0 50px rgba(255, 0, 0, 0.2);
-    padding: 20px;
+    z-index: 100;
 }
-.gamePianotitle{
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
+
+.gamePianotitle {
     width: 100%;
     height: 100%;
-    margin: 0 auto;
-    display: block;
-    border: 1px solid #111;
-    cursor: pointer;
-    border-left: none;
-    box-shadow: 0px 0px 10px #AAA;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
 }
+
 .replay{
     display: none;
     width: 40px;
@@ -238,9 +241,9 @@ body{
     left: 0;
     right: 0;
     text-align: center;
-    z-index: 100;
+    z-index: 1001;
     width: 100%;
-    display: none; /* 默认隐藏 */
+    display: none;
 }
 
 .game-controls button {
@@ -266,4 +269,24 @@ body{
     width: 40px;        /* 稍微调大图标 */
     height: 40px;
     filter: invert(1);  /* 让图标变成白色 */
+}
+
+/* 修改分数显示样式 */
+.score {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 48px;
+    color: #ff3333;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    font-weight: bold;
+    z-index: 1001;
+    transition: transform 0.2s ease-out;
+    display: none;  /* 默认隐藏分数 */
+}
+
+/* 添加分数变化时的动画类 */
+.score.changed {
+    transform: translateX(-50%) scale(1.5);
 }

@@ -94,6 +94,15 @@ function init() {
     }
     draw();
     drawStartTile(startTile);
+
+    // 添加分数显示元素
+    if (!document.getElementById('score')) {
+        var scoreElement = document.createElement('div');
+        scoreElement.id = 'score';
+        scoreElement.className = 'score';
+        scoreElement.textContent = '0';
+        document.body.appendChild(scoreElement);
+    }
 }
 
 function drawStartTile(tile) {
@@ -140,10 +149,19 @@ function drawTile(tempTile) {
 }
 
 function drawText(c) {
-    c.font = config.font;
-    c.fillStyle = config.accent;
-    c.textAlign = "center";
-    c.fillText(config.score, config.width / 2, 30);
+    // 更新分数显示
+    var scoreElement = document.getElementById('score');
+    if (scoreElement) {
+        if (scoreElement.textContent !== config.score.toString()) {
+            scoreElement.textContent = config.score;
+            scoreElement.classList.add('changed');
+            
+            // 移除动画类，让分数回到原始大小
+            setTimeout(() => {
+                scoreElement.classList.remove('changed');
+            }, 200);  // 200ms 后恢复原始大小
+        }
+    }
 }
 
 function controleSpeed() {
@@ -303,18 +321,17 @@ function gameOver() {
     config.playing = false;
     config.score = 0;
     clearInterval(config.gameInterval);
+    
+    var scoreElement = document.getElementById('score');
+    if (scoreElement) {
+        scoreElement.textContent = '0';
+    }
+    
     var c = _("gameCanvas").getContext('2d');
-
     c.font = config.font;
     c.fillStyle = config.accent;
     c.textAlign = "center";
     c.fillText("Game Over", config.width / 2, 150);
-    
-    // 删除这四行代码，不再绘制额外的按钮图标
-    // var imgReplay = _("replay");
-    // c.drawImage(imgReplay, config.width / 2 , config.height - 50 - 30, 60, 60);
-    // var imgMusic = _("music");
-    // c.drawImage(imgMusic, config.width / 2 - 70, config.height - 50 - 30, 60, 60);
 }
 
 init();
@@ -337,6 +354,8 @@ function selectSong(index){
     document.getElementById('carousel-controls').style.display = 'none';
     // 显示游戏控制按钮
     document.getElementById('game-controls').style.display = 'block';
+    // 显示分数
+    document.getElementById('score').style.display = 'block';
 
     var menuContainer = _('menuContainer');
     menuContainer.classList.remove('visible');
@@ -354,6 +373,8 @@ function backToMenu() {
     document.getElementById('carousel-controls').style.display = 'block';
     // 隐藏游戏控制按钮
     document.getElementById('game-controls').style.display = 'none';
+    // 隐藏分数
+    document.getElementById('score').style.display = 'none';
 
     var menuContainer = _('menuContainer');
     menuContainer.classList.remove('invisible');
