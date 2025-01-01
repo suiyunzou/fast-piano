@@ -24,7 +24,16 @@ var config = {
     fontNormal: "bold 20px monospace",
     intervalTime: 40,
     incrementSpeedAfterTile: 15,
-    speedIncrement: 0.4
+    speedIncrement: 0.4,
+    achievements: {
+        15: "完美！继续保持！",
+        45: "太棒了！你真是个天才！",
+        75: "无人能挡！",
+        100: "传说级表现！",
+        150: "你就是音乐之神！",
+        200: "超越人类极限！"
+    },
+    lastAchievement: 0  // 记录上一次达成的成就分数
 };
 
 function tileObject() {
@@ -324,8 +333,8 @@ function gameMouseClick(e) {
                 clickedTile.isClicked = true;
                 clickedTile.bgColor = config.tile.color.clicked;
                 config.score++;
-
-tock();
+                checkAchievement();  // 添加成就检查
+                tock();
 
             } else {
                 clickedTile.bgColor = config.tile.color.wrong;
@@ -448,4 +457,33 @@ function restartGame() {
     config.isGameOver = false;
     config.score = 0;
     startGame();
+}
+
+function checkAchievement() {
+    const score = config.score;
+    
+    // 检查是否达到新的成就
+    if (score > config.lastAchievement && config.achievements[score]) {
+        config.lastAchievement = score;
+        showAchievement(config.achievements[score]);
+    }
+}
+
+function showAchievement(message) {
+    // 创建成就提示元素（如果不存在）
+    let achievementElement = document.getElementById('achievement');
+    if (!achievementElement) {
+        achievementElement = document.createElement('div');
+        achievementElement.id = 'achievement';
+        document.body.appendChild(achievementElement);
+    }
+
+    // 显示成就消息
+    achievementElement.textContent = message;
+    achievementElement.className = 'achievement show';
+
+    // 2秒后隐藏成就提示
+    setTimeout(() => {
+        achievementElement.className = 'achievement';
+    }, 2000);
 }

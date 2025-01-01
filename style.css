@@ -327,3 +327,38 @@ body{
         0 0 10px rgba(255,0,0,0.5),
         inset 0 1px 3px rgba(0,0,0,0.4);
 }
+
+/* 成就提示样式 */
+.achievement {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    background: rgba(255, 51, 51, 0.9);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 24px;
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: 1002;
+    text-align: center;
+    pointer-events: none;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+.achievement.show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+}
+
+/* 成就动画 */
+@keyframes achievementGlow {
+    0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.6); }
+    100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
+}
+
+.achievement.show {
+    animation: achievementGlow 2s infinite;
+}
