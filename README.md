@@ -174,4 +174,11 @@ node convert.js
     </p>
 </div>
 
+## 📚 参考资料
+
+- [MIDI.js](https://galactic.ink/midi-js/) - MIDI音频处理库
+- [jasmid](https://github.com/gasman/jasmid) - MIDI文件解析器
+- [Piano-Tiles](http://tanksw.com/piano-tiles/) - 经典钢琴块游戏
+- [game-piano-hero-html5](https://github.com/humbertodias/game-piano-hero-html5) - HTML5音乐游戏参考
+
 #音乐游戏 #WebGame #钢琴块 #HTML5游戏 #前端开发
