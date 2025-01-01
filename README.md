@@ -11,19 +11,21 @@
 ## 🎯 游戏预览
 
 <div align="center">
-    <img src="docs/images/menu.png" alt="主菜单" width="400"/>
-    <p>优雅的3D轮播菜单</p>
+    <img src="doc/主界面.png" alt="主菜单" width="400"/>
+    <p>精美的3D轮播菜单，展示多样化的曲目选择</p>
 </div>
 
 <div align="center">
-    <img src="docs/images/gameplay.png" alt="游戏画面" width="400"/>
-    <p>流畅的游戏体验</p>
+    <img src="doc/游戏介绍.png" alt="游戏介绍" width="400"/>
+    <p>清晰的游戏规则说明，帮助新手快速上手</p>
 </div>
 
 <div align="center">
-    <img src="docs/images/achievement.png" alt="成就系统" width="400"/>
-    <p>激励人心的成就系统</p>
+    <img src="游戏界面.png" alt="游戏画面" width="400"/>
+    <p>简洁的游戏界面，沉浸式的音乐节奏体验</p>
 </div>
+
+
 
 ## 🎯 游戏玩法
 
@@ -167,7 +169,7 @@ node convert.js
 ---
 
 <div align="center">
-    <img src="docs/images/footer.png" alt="footer" width="800"/>
+    <img src="doc/footer.png" alt="footer" width="800"/>
     <p>
         如果喜欢这个项目，请给它一个⭐️！
     </p>
