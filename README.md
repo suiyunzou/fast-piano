@@ -21,7 +21,7 @@
 </div>
 
 <div align="center">
-    <img src="游戏界面.png" alt="游戏画面" width="400"/>
+    <img src="doc/游戏界面.png" alt="游戏画面" width="400"/>
     <p>简洁的游戏界面，沉浸式的音乐节奏体验</p>
 </div>
 
@@ -169,7 +169,6 @@ node convert.js
 ---
 
 <div align="center">
-    <img src="doc/footer.png" alt="footer" width="800"/>
     <p>
         如果喜欢这个项目，请给它一个⭐️！
     </p>
