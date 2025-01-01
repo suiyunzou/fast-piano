@@ -9,6 +9,7 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
        <link rel="stylesheet" type="text/css" href="style.css">
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
 
     <!-- polyfill: base64 para byte -->
     <script src="inc/shim/Base64.js" type="text/javascript"></script>
@@ -40,16 +41,68 @@
 
     <script src='songs.js'></script>
 
-
+    <style>
+        .carousel-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 400px;
+            position: relative;
+            margin: 50px auto;
+        }
+        
+        .carousel {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+        
+        .carousel-item {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            left: 50%;
+            top: 50%;
+            margin-left: -150px;
+            margin-top: -100px;
+            transition: transform 1s, opacity 1s;
+            cursor: pointer;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        
+        .carousel-item:hover {
+            transform: scale(1.1);
+        }
+    </style>
     </head>
 
     <body class="noBorder">
 
 <div id='menuContainer'>
-    <div onclick="selectSong(0)" onmouseenter="console.log('enter')"><img src='img/south-park.png'/></div>
-    <div onclick="selectSong(1)"><img src='img/the-simpsons.png'/></div>
-    <div onclick="selectSong(2)"><img src='img/传奇.png'/></div>
-    <div onclick="selectSong(3)"><img src='img/盗将行.png'/></div>
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-item" onclick="selectSong(0)">
+                <img src='img/south-park.png' alt="South Park"/>
+            </div>
+            <div class="carousel-item" onclick="selectSong(1)">
+                <img src='img/the-simpsons.png' alt="The Simpsons"/>
+            </div>
+            <div class="carousel-item" onclick="selectSong(2)">
+                <img src='img/传奇.png' alt="传奇"/>
+            </div>
+            <div class="carousel-item" onclick="selectSong(3)">
+                <img src='img/盗将行.png' alt="盗将行"/>
+            </div>
+        </div>
+    </div>
 </div>
 
          <div class="gameContainer" id="gameContainer">
@@ -60,5 +113,80 @@
 
         <script src='game.js'></script>
         <script src='music.js'></script>
+        <script>
+        $(function() {
+            var carousel = $('.carousel');
+            var items = $('.carousel-item');
+            var currentAngle = 0;
+            var itemCount = items.length;
+            var angleIncrement = 360 / itemCount;
+            var isAnimating = false;
+
+            // Initial setup
+            function setupCarousel() {
+                items.each(function(index) {
+                    var angle = angleIncrement * index;
+                    var zTranslate = 400; // Radius of the carousel
+                    $(this).css({
+                        'transform': `rotateY(${angle}deg) translateZ(${zTranslate}px)`
+                    });
+                });
+            }
+
+            setupCarousel();
+
+            // Auto rotation
+            var autoRotate = setInterval(function() {
+                if (!isAnimating) {
+                    currentAngle -= angleIncrement;
+                    carousel.css('transform', `rotateY(${currentAngle}deg)`);
+                }
+            }, 3000);
+
+            // Pause auto rotation on hover
+            $('.carousel-container').hover(
+                function() {
+                    clearInterval(autoRotate);
+                },
+                function() {
+                    autoRotate = setInterval(function() {
+                        if (!isAnimating) {
+                            currentAngle -= angleIncrement;
+                            carousel.css('transform', `rotateY(${currentAngle}deg)`);
+                        }
+                    }, 3000);
+                }
+            );
+
+            // Touch events
+            var startX;
+            $('.carousel-container').on('touchstart', function(e) {
+                startX = e.touches[0].pageX;
+                clearInterval(autoRotate);
+            });
+
+            $('.carousel-container').on('touchend', function(e) {
+                var endX = e.changedTouches[0].pageX;
+                var diff = startX - endX;
+                
+                if (Math.abs(diff) > 50) { // Minimum swipe distance
+                    if (diff > 0) {
+                        currentAngle -= angleIncrement;
+                    } else {
+                        currentAngle += angleIncrement;
+                    }
+                    carousel.css('transform', `rotateY(${currentAngle}deg)`);
+                }
+
+                // Restart auto rotation
+                autoRotate = setInterval(function() {
+                    if (!isAnimating) {
+                        currentAngle -= angleIncrement;
+                        carousel.css('transform', `rotateY(${currentAngle}deg)`);
+                    }
+                }, 3000);
+            });
+        });
+        </script>
     </body>
 </html>
