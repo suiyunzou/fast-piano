@@ -11,7 +11,7 @@ var config = {
         border: 1,
         color: {
             default: "#FFF",
-            clicked: "#999",
+            clicked: "rgba(255, 255, 255, 0.5)",
             unclicked: "#000",
             wrong: "#ff5757"
         }
@@ -39,6 +39,7 @@ function tileObject() {
     this.isClicked = false;
     this.row = 0;
     this.col = 0;
+    this.className = '';
 }
 
 function _(id) {
@@ -140,12 +141,69 @@ function draw() {
 
 function drawTile(tempTile) {
     var c = _("gameCanvas").getContext('2d');
-    c.fillStyle = tempTile.borderColor;
-    c.fillRect(tempTile.x, tempTile.y, tempTile.width, tempTile.height);
+    
+    // 保存当前上下文状态
+    c.save();
+    
+    // 设置阴影效果
+    c.shadowColor = 'rgba(0, 0, 0, 0.3)';
+    c.shadowBlur = 5;
+    c.shadowOffsetY = 2;
+    
+    // 绘制按键背景
     c.fillStyle = tempTile.bgColor;
-    c.fillRect(tempTile.x + tempTile.border, tempTile.y + tempTile.border,
-            tempTile.width - tempTile.border, tempTile.height - tempTile.border);
+    c.beginPath();
+    c.roundRect(
+        tempTile.x + tempTile.border,
+        tempTile.y + tempTile.border,
+        tempTile.width - tempTile.border * 2,
+        tempTile.height - tempTile.border * 2,
+        4  // 圆角半径
+    );
     c.fill();
+    
+    // 添加渐变效果
+    var gradient = c.createLinearGradient(
+        tempTile.x,
+        tempTile.y,
+        tempTile.x,
+        tempTile.y + tempTile.height
+    );
+    
+    if (tempTile.bgColor === config.tile.color.default) {
+        // 白键渐变
+        gradient.addColorStop(0, '#ffffff');
+        gradient.addColorStop(0.75, '#eeeeee');
+        gradient.addColorStop(1, '#dddddd');
+    } else if (tempTile.bgColor === config.tile.color.unclicked) {
+        // 黑键渐变
+        gradient.addColorStop(0, '#333333');
+        gradient.addColorStop(1, '#000000');
+    } else if (tempTile.bgColor === config.tile.color.clicked) {
+        // 点击效果渐变 - 改为半透明效果
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.7)');  // 较亮的半透明
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.3)');  // 较暗的半透明
+    }
+    
+    c.fillStyle = gradient;
+    c.fill();
+    
+    // 添加高光效果
+    if (tempTile.bgColor === config.tile.color.default) {
+        var highlight = c.createLinearGradient(
+            tempTile.x,
+            tempTile.y,
+            tempTile.x,
+            tempTile.y + 20
+        );
+        highlight.addColorStop(0, 'rgba(255,255,255,0.8)');
+        highlight.addColorStop(1, 'rgba(255,255,255,0)');
+        c.fillStyle = highlight;
+        c.fill();
+    }
+    
+    // 恢复上下文状态
+    c.restore();
 }
 
 function drawText(c) {
