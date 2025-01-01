@@ -230,3 +230,40 @@ body{
         transform: translateY(-20px);
     }
 }
+
+/* 添加新的游戏控制按钮样式 */
+.game-controls {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 100;
+    width: 100%;
+    display: none; /* 默认隐藏 */
+}
+
+.game-controls button {
+    background: rgba(255, 0, 0, 0.8);
+    border: none;
+    margin: 0 10px;
+    border-radius: 50%;  /* 改为圆形按钮 */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 50px;        /* 修改为正方形尺寸 */
+    height: 50px;       /* 修改为正方形尺寸 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-controls button:hover {
+    background: rgba(255, 0, 0, 1);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+.game-controls button img {
+    width: 30px;        /* 调整图标大小 */
+    height: 30px;       /* 调整图标大小 */
+}

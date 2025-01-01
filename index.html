@@ -66,9 +66,18 @@
             </div>
         </div>
 
-        <div class="controls">
+        <div class="controls" id="carousel-controls">
             <button type="button" class="prev" onclick="rotateCarouselPrev()">上一首</button>
             <button type="button" class="next" onclick="rotateCarouselNext()">下一首</button>
+        </div>
+
+        <div class="game-controls" id="game-controls">
+            <button type="button" class="restart" onclick="restartGame()">
+                <img src="img/replay.png" alt="重新开始">
+            </button>
+            <button type="button" class="back-to-menu" onclick="backToMenu()">
+                <img src="img/music.png" alt="返回菜单">
+            </button>
         </div>
 
         <div class="gameContainer" id="gameContainer">

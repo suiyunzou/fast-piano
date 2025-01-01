@@ -348,6 +348,10 @@ function showMusics(){
 }
 
 function selectSong(index){
+    // 隐藏轮播控制按钮
+    document.getElementById('carousel-controls').style.display = 'none';
+    // 显示游戏控制按钮
+    document.getElementById('game-controls').style.display = 'block';
 
     var menuContainer = _('menuContainer');
     menuContainer.classList.remove('visible');
@@ -358,4 +362,26 @@ function selectSong(index){
     gameContainer.classList.toggle('visible');
 
     playSong(index);
+}
+
+function backToMenu() {
+    // 显示轮播控制按钮
+    document.getElementById('carousel-controls').style.display = 'block';
+    // 隐藏游戏控制按钮
+    document.getElementById('game-controls').style.display = 'none';
+
+    var menuContainer = _('menuContainer');
+    menuContainer.classList.remove('invisible');
+    menuContainer.classList.toggle('visible');
+
+    var gameContainer = _('gameContainer');
+    gameContainer.classList.remove('visible');
+    gameContainer.classList.toggle('invisible');
+}
+
+function restartGame() {
+    init();
+    config.isGameOver = false;
+    config.score = 0;
+    startGame();
 }
