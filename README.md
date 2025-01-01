@@ -1,55 +1,101 @@
-# 钢琴快手 (Fast Piano)
+# 🎹 钢琴英雄：节奏与音乐的完美邂逅
 
-一款充满趣味性的音乐节奏游戏
+## ✨ 特色亮点
 
-> 🎮 游戏展示视频：[B站视频演示](https://space.bilibili.com/413467030)
+🎵 经典歌曲改编，从流行到古典应有尽有  
+🎮 简单上手，考验反应的音乐节奏游戏  
+🏆 独特成就系统，解锁音乐大师称号  
+🎨 优雅的视觉设计，沉浸式游戏体验  
+🔥 难度递进，越玩越有挑战性
 
-## 前置要求
+## 🎯 游戏预览
 
-1. Git 2.6+
-2. 浏览器
-3. node.js
+<div align="center">
+    <img src="docs/images/menu.png" alt="主菜单" width="400"/>
+    <p>优雅的3D轮播菜单</p>
+</div>
 
-## 如何游玩
+<div align="center">
+    <img src="docs/images/gameplay.png" alt="游戏画面" width="400"/>
+    <p>流畅的游戏体验</p>
+</div>
 
-克隆仓库
+<div align="center">
+    <img src="docs/images/achievement.png" alt="成就系统" width="400"/>
+    <p>激励人心的成就系统</p>
+</div>
 
-```shell
+## 🎯 游戏玩法
+
+像弹钢琴一样，点击下落的黑键即可得分！随着分数提升，速度会逐渐加快，考验你的反应能力。错过或点错琴键就会游戏结束，看看你能达到多少分！
+
+### 操作说明
+- 🖱️ 点击黑色琴键得分
+- ⌨️ 避免点击白色琴键
+- 🎯 不要让黑键落到底部
+- 🏃‍♂️ 速度会随分数提升而加快
+
+## 🎵 曲目列表
+
+- 🎼 South Park Theme
+- 🎼 The Simpsons Theme
+- 🎼 传奇
+- 🎼 盗将行
+
+## 💡 开发灵感
+
+将经典的钢琴块玩法与现代Web技术相结合，打造出一款既能享受音乐，又充满挑战性的音乐游戏。无论你是音乐爱好者还是休闲游戏玩家，都能在这里找到属于自己的快乐！
+
+## 🚀 快速开始
+
+1. 克隆仓库
+```bash
 git clone https://github.com/suiyunzou/fast-piano.git
 ```
 
-进入文件夹
-
-```shell
+2. 进入项目目录
+```bash
 cd fast-piano
 ```
 
-现在，在您喜欢的浏览器中打开 **play.html**。
+3. 在浏览器中打开
+```bash
+open play.html  # macOS
+start play.html # Windows
+```
 
-## 游戏设置调整
+## 🔗 相关链接
+
+- 📺 [游戏演示视频](https://www.bilibili.com/video/BV1u96ZYWENX/?spm_id_from=333.999.0.0)
+- 💻 [GitHub项目地址](https://github.com/suiyunzou/fast-piano)
+- 🎵 [MIDI资源推荐](https://www.midishow.com/)
+
+## 🤝 贡献指南
+
+欢迎贡献新的功能或改进！
+
+## 📜 开源协议
+
+本项目采用 MIT 协议开源，详情请参阅 [LICENSE](LICENSE) 文件。
+
+## 🛠️ 开发者指南
 
 ### 调整游戏速度
 
-在 `game.js` 文件中，可以通过修改以下配置来调整游戏速度：
-
+在 `game.js` 文件中修改以下配置：
 ```javascript
 var config = {
-    speed: 6,                      // 初始速度
-    incrementSpeedAfterTile: 15,   // 每多少分增加一次速度
-    speedIncrement: 0.4,           // 每次速度增加的值
-    // ...
+    speed: 6,                      // 初始速度（默认：6）
+    incrementSpeedAfterTile: 15,   // 每多少分增加一次速度（默认：15）
+    speedIncrement: 0.4,           // 每次速度增加的幅度（默认：0.4）
 };
 ```
 
-- `speed`: 游戏初始速度（默认值：6）
-- `incrementSpeedAfterTile`: 每得多少分增加一次速度（默认值：15）
-- `speedIncrement`: 每次速度增加的幅度（默认值：0.4）
-- 注意：速度上限为12，超过可能会影响游戏体验
+⚠️ 注意：速度上限为12，超过可能影响游戏体验
 
-### 修改成就系统
+### 自定义成就系统
 
-在 `game.js` 文件中，可以通过修改 `achievements` 对象来自定义成就：
-
+在 `game.js` 文件中修改 achievements 对象：
 ```javascript
 var config = {
     achievements: {
@@ -60,90 +106,71 @@ var config = {
         150: "你就是音乐之神！",
         200: "超越人类极限！"
     }
-    // ...
 };
 ```
 
-添加新成就：
-1. 在 `achievements` 对象中添加新条目
-2. 格式为：`分数: "成就提示文本"`
-3. 分数必须是整数
-4. 建议按照分数从小到大排序
+添加新成就时注意：
+- 分数必须是整数
+- 建议按分数从小到大排序
+- 成就文本建议简短有趣
 
-例如添加新成就：
+### 添加新歌曲
+
+#### 1. 准备素材
+- MIDI文件（推荐网站：https://www.midishow.com/）
+- 歌曲封面图片（PNG格式，建议尺寸：300x200）
+
+#### 2. 转换MIDI文件
+```bash
+# 1. 将MIDI文件放入 audio/mids 目录
+# 2. 修改 convert.js 中的文件路径
+# 3. 运行转换命令
+node convert.js
+```
+
+#### 3. 修改 songs.js
 ```javascript
-achievements: {
-    15: "完美！继续保持！",
-    45: "太棒了！你真是个天才！",
-    75: "无人能挡！",
-    100: "传说级表现！",
-    150: "你就是音乐之神！",
-    200: "超越人类极限！",
-    300: "打破次元壁！",    // 新添加的成就
-    500: "宇宙最强音乐家！" // 新添加的成就
+{
+    'track': 1,          // 钢琴音轨编号（通常为1或2）
+    'name': '歌曲名称',   // 显示的歌曲名称
+    'base64': '...'      // 第2步获得的Base64字符串
 }
 ```
 
-## 添加新歌曲教程
-
-### 准备工作
-
-1. 准备 MIDI 文件
-   - 确保您有想要添加的歌曲的 MIDI 文件
-   - 准备一个您有想要添加的歌曲的png图片
-   - 推荐MIDI资源：https://www.midishow.com/
-
-2. 安装必要工具
-   - 确保已安装 Node.js 
-
-### 添加新歌曲的步骤
-
-1. **转换 MIDI 文件为 Base64**
-   - 将 MIDI 文件放在项目audio\mids目录下
-   - 修改 `convert.js` 文件，将 MIDI 文件路径替换为实际路径
-   - 命令将输出 Base64 编码的字符串
-
-2. **确定钢琴音轨编号**
-   - 通常钢琴音轨编号为 1 或 2
-   - 如果不确定，可以尝试不同的音轨号，直到找到正确的钢琴音轨 范围：(0-4)
-
-3. **修改 songs.js 文件**
-   - 打开 `songs.js` 文件
-   - 在歌曲列表中添加新条目:
-     ```javascript
-     {
-         'track': 1,          // 钢琴音轨编号
-         'name': '歌曲名称',   // 显示的歌曲名称
-         'base64': '...'      // 第1步获得的Base64字符串
-     }
-     ```
-
-4. **测试新添加的歌曲**
-   - 刷新游戏页面
-   - 检查新歌曲是否出现在列表中
-   - 播放测试，确保音轨正确
+#### 4. 添加封面图片
+- 将图片放入 `img` 目录
+- 在 `play.html` 中添加轮播项：
+```html
+<div class="carousel-item" onclick="selectSong(索引号)">
+    <img src='img/你的图片.png' alt="歌曲名称"/>
+</div>
+```
 
 ### 常见问题解决
 
-1. **如果音轨选择错误**
-   - 表现：听不到钢琴声音或听到错误的乐器声音
-   - 解决：修改 songs.js 中对应歌曲的 track 值 范围【0-4】
+#### 1. 音轨选择错误
+- 现象：听不到钢琴声音或声音不对
+- 解决：尝试修改 track 值（范围：0-4）
 
-2. **如果 Base64 数据错误**
-   - 表现：歌曲无法播放
-   - 解决：检查 Base64 字符串是否完整，确保包含 MIDI 文件的完整数据
+#### 2. Base64数据错误
+- 现象：歌曲无法播放
+- 解决：重新运行 convert.js 转换
 
-3. **游戏速度过快或过慢**
-   - 表现：游戏难度不合适
-   - 解决：调整 game.js 中的速度相关参数
+#### 3. 游戏速度问题
+- 现象：游戏太快或太慢
+- 解决：调整 config.speed 和相关参数
 
-4. **成就提示不显示**
-   - 表现：达到特定分数但没有成就提示
-   - 解决：检查 achievements 对象中的分数设置是否正确
+#### 4. 成就不显示
+- 现象：达到分数无提示
+- 解决：检查 achievements 配置
 
-## 参考资料
+---
 
-- [MIDI.js](https://galactic.ink/midi-js/)
-- [jasmid](https://github.com/gasman/jasmid)
-- [Piano-Tiles](http://tanksw.com/piano-tiles/)
-- [game-piano-hero-html5](https://github.com/humbertodias/game-piano-hero-html5)
+<div align="center">
+    <img src="docs/images/footer.png" alt="footer" width="800"/>
+    <p>
+        如果喜欢这个项目，请给它一个⭐️！
+    </p>
+</div>
+
+#音乐游戏 #WebGame #钢琴块 #HTML5游戏 #前端开发
