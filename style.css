@@ -244,26 +244,26 @@ body{
 }
 
 .game-controls button {
-    background: rgba(255, 0, 0, 0.8);
+    background: transparent;  /* 改为透明背景 */
     border: none;
     margin: 0 10px;
-    border-radius: 50%;  /* 改为圆形按钮 */
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 50px;        /* 修改为正方形尺寸 */
-    height: 50px;       /* 修改为正方形尺寸 */
+    width: 50px;
+    height: 50px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 0;  /* 移除内边距 */
 }
 
 .game-controls button:hover {
-    background: rgba(255, 0, 0, 1);
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    transform: scale(1.2);  /* 只保留放大效果 */
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));  /* 添加红色阴影效果 */
 }
 
 .game-controls button img {
-    width: 30px;        /* 调整图标大小 */
-    height: 30px;       /* 调整图标大小 */
+    width: 40px;        /* 稍微调大图标 */
+    height: 40px;
+    filter: invert(1);  /* 让图标变成白色 */
 }

@@ -6,7 +6,7 @@ var config = {
     rows: 5, // 
     width: window.innerWidth,
     height: window.innerHeight,
-    speed: 10,
+    speed: 6,
     tile: {
         border: 1,
         color: {
@@ -23,7 +23,8 @@ var config = {
     font: "bold 30px monospace",
     fontNormal: "bold 20px monospace",
     intervalTime: 40,
-    incrementSpeedAfterTile: 10
+    incrementSpeedAfterTile: 15,
+    speedIncrement: 0.4
 };
 
 function tileObject() {
@@ -148,14 +149,11 @@ function drawText(c) {
 function controleSpeed() {
     var num = config.incrementSpeedAfterTile;
     if (config.score % num == num - 1) {
-        var speed = config.intervalTime - 5 * Math.round(config.score / num);
-        if (speed < 5) {
-            speed = 5;
-        } else {
-            clearInterval(config.gameInterval);
-            config.gameInterval = setInterval(draw, speed);
+        var newSpeed = config.speed + config.speedIncrement;
+        if (newSpeed < 12) {
+            config.speed = newSpeed;
+            console.log("Speed increased to -> " + config.speed);
         }
-        console.log("Speed ->" + speed);
     }
 }
 
@@ -172,12 +170,9 @@ function moveToNextFrame() {
     for (var i = 0; i < len; i++) {
         var tempTile = tileHolder[i];
 
-        //Check if clickable tile has reached to end
-        //i.e. Game Over
         if (tempTile.clickable) {
             if (!tempTile.isClicked) {
                 if (tempTile.y + tempTile.height + config.speed >= config.height) {
-
                     tempTile.bgColor = config.tile.color.wrong;
                     gameOver();
                 }
@@ -185,21 +180,11 @@ function moveToNextFrame() {
         }
 
         if (tempTile.y > config.height) {
-
-            //Check Game Over
-//                        if (tempTile.clickable) {
-//                            if (!tempTile.isClicked) {
-//                                gameOver();
-//                            }
-//                        }
-
-
-            //Remove Tile and add new tile or reset existing tile
             tempTile.y = maxPosition - tempTile.height;
             resetTileExceptXYPosition(tempTile);
             tempTileHolder.push(tempTile);
-
         }
+        
         tempTile.y += config.speed;
     }
 
@@ -324,12 +309,12 @@ function gameOver() {
     c.fillStyle = config.accent;
     c.textAlign = "center";
     c.fillText("Game Over", config.width / 2, 150);
-    var imgReplay = _("replay");
-    c.drawImage(imgReplay, config.width / 2 , config.height - 50 - 30, 60, 60);
-
-    var imgMusic = _("music");
-    c.drawImage(imgMusic, config.width / 2 - 70, config.height - 50 - 30, 60, 60);
-
+    
+    // 删除这四行代码，不再绘制额外的按钮图标
+    // var imgReplay = _("replay");
+    // c.drawImage(imgReplay, config.width / 2 , config.height - 50 - 30, 60, 60);
+    // var imgMusic = _("music");
+    // c.drawImage(imgMusic, config.width / 2 - 70, config.height - 50 - 30, 60, 60);
 }
 
 init();
