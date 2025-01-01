@@ -110,5 +110,31 @@
                 });
             });
         </script>
+
+        <div class="game-tutorial" id="gameTutorial">
+            <div class="tutorial-content">
+                <div class="tutorial-header">
+                    <h2>游戏说明</h2>
+                    <div class="close-button" onclick="closeTutorial()">×</div>
+                </div>
+                <div class="tutorial-body">
+                    <div class="tutorial-step">
+                        <div class="step-number">1</div>
+                        <p>点击黑色琴键获得分数</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="step-number">2</div>
+                        <p>错过或点错琴键则游戏结束</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="step-number">3</div>
+                        <p>随着分数提升，速度会逐渐加快</p>
+                    </div>
+                </div>
+                <div class="tutorial-footer">
+                    <button onclick="startGameWithTutorial()" class="start-button">开始游戏</button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
