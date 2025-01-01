@@ -4,7 +4,7 @@ body{
     background-repeat: no-repeat;
     margin: 0px;
     padding: 0px;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     overflow-y: auto;
     margin: 0;
@@ -13,6 +13,7 @@ body{
     background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
     color: #fff;
     overflow-x: hidden;
+    position: relative;
 }
 
 .game-title {
@@ -117,6 +118,7 @@ body{
     height: 400px;
     position: relative;
     margin: 50px auto;
+    overflow: hidden;
 }
 
 .carousel {
@@ -125,6 +127,7 @@ body{
     position: absolute;
     transform-style: preserve-3d;
     transition: transform 1s;
+    transform-origin: center;
 }
 
 .carousel-item {
@@ -137,6 +140,8 @@ body{
     margin-top: -100px;
     transition: transform 1s, opacity 1s;
     cursor: pointer;
+    backface-visibility: visible;
+    transform-origin: center;
 }
 
 .carousel-item img {
@@ -147,6 +152,8 @@ body{
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
     border: 3px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 .carousel-item:hover img {

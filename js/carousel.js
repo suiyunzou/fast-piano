@@ -24,130 +24,64 @@ $(document).ready(function() {
     createParticles();
 
     // 3D轮播图相关代码
-    var carousel = $('.carousel');
-    var items = $('.carousel-item');
-    var currentAngle = 0;
-    var itemCount = items.length;
-    var angleIncrement = 360 / itemCount;
-    var isAnimating = false;
-    var autoRotate;
+    const carousel = $('.carousel');
+    const items = $('.carousel-item');
+    let currentAngle = 0;
+    const itemCount = items.length;
+    const angleIncrement = 360 / itemCount;
 
     console.log('Found carousel items:', items.length);
 
+    // 初始化每个卡片的位置
     function setupCarousel() {
         items.each(function(index) {
-            var angle = angleIncrement * index;
-            var zTranslate = 400;
-            $(this).css({
-                'transform': `rotateY(${angle}deg) translateZ(${zTranslate}px)`
-            });
+            const angle = angleIncrement * index;
+            $(this).css('transform', `rotateY(${angle}deg) translateZ(400px)`);
         });
+        updateCarousel(); // 确保初始状态正确
     }
 
+    // 更新轮播图的旋转
+    function updateCarousel() {
+        carousel.css('transform', `rotateY(${currentAngle}deg)`);
+    }
+
+    // 向前旋转
+    window.rotateCarouselNext = function() {
+        currentAngle -= angleIncrement;
+        updateCarousel();
+    };
+
+    // 向后旋转
+    window.rotateCarouselPrev = function() {
+        currentAngle += angleIncrement;
+        updateCarousel();
+    };
+
+    // 初始化轮播图
     setupCarousel();
 
-    function rotateCarousel(direction) {
-        console.log('Rotating carousel:', direction);
-        if (isAnimating) return;
-        isAnimating = true;
-        
-        if (direction === 'prev') {
-            currentAngle += angleIncrement;
-        } else {
-            currentAngle -= angleIncrement;
-        }
-        
-        carousel.css('transform', `rotateY(${currentAngle}deg)`);
-        
-        setTimeout(function() {
-            isAnimating = false;
-        }, 1000);
-    }
-
-    function startAutoRotate() {
-        if (autoRotate) {
-            clearInterval(autoRotate);
-        }
-        autoRotate = setInterval(function() {
-            if (!isAnimating) {
-                rotateCarousel('next');
-            }
-        }, 3000);
-    }
-
-    // 开始自动旋转
-    startAutoRotate();
-
-    // 使用 mouseenter/mouseleave 替代 hover
-    var carouselContainer = $('.carousel-container');
-    
-    carouselContainer.on('mouseenter', function() {
-        console.log('Mouse entered carousel');
-        if (autoRotate) {
-            clearInterval(autoRotate);
-            autoRotate = null;
-        }
-    });
-
-    carouselContainer.on('mouseleave', function() {
-        console.log('Mouse left carousel');
-        startAutoRotate();
-    });
-
-    // 定义全局函数
-    window.rotateCarouselPrev = function() {
-        console.log('Global prev function called');
-        if (autoRotate) {
-            clearInterval(autoRotate);
-        }
-        rotateCarousel('prev');
-        startAutoRotate();
-    };
-    
-    window.rotateCarouselNext = function() {
-        console.log('Global next function called');
-        if (autoRotate) {
-            clearInterval(autoRotate);
-        }
-        rotateCarousel('next');
-        startAutoRotate();
-    };
-
-    // 按钮点击事件
-    $('.prev').on('click', function(e) {
-        console.log('Previous button clicked in carousel.js');
+    // 绑定按钮点击事件
+    $('.prev').click(function(e) {
         e.preventDefault();
-        window.rotateCarouselPrev();
+        rotateCarouselPrev();
     });
 
-    $('.next').on('click', function(e) {
-        console.log('Next button clicked in carousel.js');
+    $('.next').click(function(e) {
         e.preventDefault();
-        window.rotateCarouselNext();
+        rotateCarouselNext();
     });
 
-    // 触摸控制
-    var startX;
-    carouselContainer.on('touchstart', function(e) {
-        startX = e.touches[0].pageX;
-        if (autoRotate) {
-            clearInterval(autoRotate);
-            autoRotate = null;
+    // 自动轮播
+    let autoRotateInterval = setInterval(rotateCarouselNext, 3000);
+
+    // 鼠标悬停时暂停自动轮播
+    $('.carousel-container').hover(
+        function() {
+            clearInterval(autoRotateInterval);
+        },
+        function() {
+            autoRotateInterval = setInterval(rotateCarouselNext, 3000);
         }
-    });
-
-    carouselContainer.on('touchend', function(e) {
-        var endX = e.changedTouches[0].pageX;
-        var diff = startX - endX;
-        
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-                rotateCarousel('next');
-            } else {
-                rotateCarousel('prev');
-            }
-        }
-
-        startAutoRotate();
-    });
+    );
 });
